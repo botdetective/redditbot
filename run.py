@@ -46,21 +46,26 @@ def run_bot(r, comments_replied_to):
 
 def get_karma():
     user = r.user.me()
-    comment_list = user.comments.new(limit=20)
+    comment_list = []
+    for comment in user.comments.new(limit=20):
+        comment_list.append(comment.id)
     p_id = open("Parent_id.txt","a+")
     for comment in comment_list:
-            if comment.score < -2:
-                parent_id = comment.parent_id
-                if parent_id not in p_id.read().split("\n"):
-                    parent_comment = r.comment(id=parent_id)
-                    body = comment.body
-                    comment.delete()
-                    parent_comment.reply(body)
-                    p_id.write(comment.parent_id + "\n")
-                    print("Comment reposted.")
-            else:
-                checkingvotes()
-
+        comment = r.comment(id = comment)
+        print("Comment with " + str(comment.score) + " found")
+        if int(comment.score) < 0:
+            print("Comment with " + str(comment.score) + " found")
+            parent_id = comment.parent_id
+            if parent_id not in p_id.read().split("\n"):
+                parent_comment = r.comment(id=parent_id)
+                body = comment.body
+                comment.delete()
+                parent_comment.reply(body)
+                p_id.write(comment.parent_id + "\n")
+                print("Comment reposted.")
+        else:
+            checkingvotes()
+	
 def get_saved_comments():
 	if not os.path.isfile("comments_replied_to.txt"):
 		comments_replied_to = []
