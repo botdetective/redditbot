@@ -16,27 +16,29 @@ def bot_login():
 	return r
 
 def run_bot(r, comments_replied_to):
+    run_part1()
 
-	def part1():
-		print(("String with blacklisted link found in comment " + comment.id + " by " +  comment.author.name))
-		#comment.submission.report('Likely posted by a bot to promote product link.')
-		#print(("Reported submission" + comment.submision.id))
-		comment.report('This is posted by a bot to promote product link.')
-		print(("Reported comment " + comment.id + "from " + comment.author.name))
-		comments_replied_to.append(comment.id)
-		with open ("comments_replied_to.txt", "a") as f, open ("check_if_op_is_bot.txt", "r+") as b:
-			f.write(comment.id + "\n")
-			b.write("https://api.pushshift.io/reddit/search/comment/?author=" + comment.submission.author.name + "\n")
-			print("Wrote url to check_if_op_is_bot.txt")
-			
-	print("Searching last 1,000 comments")
+def run_part1():
+		def part1():
+			print(("String with blacklisted link found in comment " + comment.id + " by " +  comment.author.name))
+			#comment.submission.report('Likely posted by a bot to promote product link.')
+			#print(("Reported submission" + comment.submision.id))
+			comment.report('This is posted by a bot to promote product link.')
+			print(("Reported comment " + comment.id + "from " + comment.author.name))
+			comments_replied_to.append(comment.id)
+			with open ("comments_replied_to.txt", "a") as f, open ("check_if_op_is_bot.txt", "r+") as b:
+				f.write(comment.id + "\n")
+				b.write("https://api.pushshift.io/reddit/search/comment/?author=" + comment.submission.author.name + "\n")
+				print("Wrote url to check_if_op_is_bot.txt")
+	
+		print("Searching last 1,000 comments")
 
-	for comment in subredditsthatdontallowcomments:
-		if "gearshop.space" in comment.body and comment.id not in comments_replied_to and comment.author or "torridmart.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "apeirondeals.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "/products/creative-bottle-openers-tool-flying-cap-launcher" in comment.body and comment.id not in comments_replied_to and comment.author or "ref=cm_sw_r_cp_apa_i_7dIfCb0CW169G" in comment.body and comment.id not in comments_replied_to and comment.author or "/u/BotDetective test" in comment.body and comment.id not in comments_replied_to and comment.author or "etrendan.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "geekydeal.store/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "pearlgadget.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "stiflingdeals.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "prenkart.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "kickize.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "hashtagssale.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
-			part1()
-	print("Search Completed.")
-	print(comments_replied_to)
-	run_part2()
+		for comment in subredditsthatdontallowcomments:
+			if "gearshop.space" in comment.body and comment.id not in comments_replied_to and comment.author or "torridmart.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "apeirondeals.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "/products/creative-bottle-openers-tool-flying-cap-launcher" in comment.body and comment.id not in comments_replied_to and comment.author or "ref=cm_sw_r_cp_apa_i_7dIfCb0CW169G" in comment.body and comment.id not in comments_replied_to and comment.author or "/u/BotDetective test" in comment.body and comment.id not in comments_replied_to and comment.author or "etrendan.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "geekydeal.store/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "pearlgadget.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "stiflingdeals.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "prenkart.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "kickize.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "hashtagssale.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
+				part1()
+		print("Search Completed.")
+		print(comments_replied_to)
+		run_part2()
 	
 def run_part2():
 
@@ -96,7 +98,7 @@ def run_part3():
 			part3()
 	print("Search Completed.")
 	print(comments_replied_to)
-	run_bot()
+	run_part1()
 
 def gethistory():
 	with open ("check_if_op_is_bot.txt", "r+") as b:
