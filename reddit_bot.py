@@ -82,11 +82,11 @@ def run_part3():
 
 	for comment in urlshorteners:
 		if ".gl" in comment.body and comment.id not in comments_replied_to and comment.author or "bit.ly" in comment.body and comment.id not in comments_replied_to and comment.author or "sungearstore.com" in comment.body and comment.id not in comments_replied_to and comment.author or "baamboom.club" in comment.body and comment.id not in comments_replied_to and comment.author or "qualifiedfashion.com" in comment.body and comment.id not in comments_replied_to and comment.author or "usagearshop.com" in comment.body and comment.id not in comments_replied_to and comment.author or "newtshirtshop.com" in comment.body and comment.id not in comments_replied_to and comment.author or ".website" in comment.body and comment.id not in comments_replied_to and comment.author or ".icu" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
-			with open ("findlink.txt", "w") as f, open('extractlink', 'w') as outfile:
-				f.write(comment.body)
+			with open ("findlink.txt", "w") as infile, open('extractlink', 'w') as outfile:
+				infile.write(comment.body)
 				
 				copy = False
-				for line in f:
+				for line in infile:
 					if line.strip() == "](":
 						outfile.write(line) # add this
 						copy = True
