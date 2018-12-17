@@ -16,31 +16,25 @@ def bot_login():
 	return r
 
 def run_bot(r, comments_replied_to):
-    run_part1()
-
-def run_part1():
-		def part1():
-			print(("String with blacklisted link found in comment " + comment.id + " by " +  comment.author.name))
-			#comment.submission.report('Likely posted by a bot to promote product link.')
-			#print(("Reported submission" + comment.submision.id))
-			comment.report('This is posted by a bot to promote product link.')
-			print(("Reported comment " + comment.id + "from " + comment.author.name))
-			comments_replied_to.append(comment.id)
-			with open ("comments_replied_to.txt", "a") as f, open ("check_if_op_is_bot.txt", "r+") as b:
-				f.write(comment.id + "\n")
-				b.write("https://api.pushshift.io/reddit/search/comment/?author=" + comment.submission.author.name + "\n")
-				print("Wrote url to check_if_op_is_bot.txt")
+	def part1():
+		print(("String with blacklisted link found in comment " + comment.id + " by " +  comment.author.name))
+		#comment.submission.report('Likely posted by a bot to promote product link.')
+		#print(("Reported submission" + comment.submision.id))
+		comment.report('This is posted by a bot to promote product link.')
+		print(("Reported comment " + comment.id + "from " + comment.author.name))
+		comments_replied_to.append(comment.id)
+		with open ("comments_replied_to.txt", "a") as f, open ("check_if_op_is_bot.txt", "r+") as b:
+			f.write(comment.id + "\n")
+			b.write("https://api.pushshift.io/reddit/search/comment/?author=" + comment.submission.author.name + "\n")
+			print("Wrote url to check_if_op_is_bot.txt")
 	
-		print("Searching last 1,000 comments")
+	print("Searching last 1,000 comments")
 
-		for comment in subredditsthatdontallowcomments:
-			if "gearshop.space" in comment.body and comment.id not in comments_replied_to and comment.author or "torridmart.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "apeirondeals.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "/products/creative-bottle-openers-tool-flying-cap-launcher" in comment.body and comment.id not in comments_replied_to and comment.author or "ref=cm_sw_r_cp_apa_i_7dIfCb0CW169G" in comment.body and comment.id not in comments_replied_to and comment.author or "/u/BotDetective test" in comment.body and comment.id not in comments_replied_to and comment.author or "etrendan.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "geekydeal.store/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "pearlgadget.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "stiflingdeals.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "prenkart.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "kickize.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "hashtagssale.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
-				part1()
-		print("Search Completed.")
-		print(comments_replied_to)
-		run_part2()
-	
-def run_part2():
+	for comment in subredditsthatdontallowcomments:
+		if "gearshop.space" in comment.body and comment.id not in comments_replied_to and comment.author or "torridmart.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "apeirondeals.com/products" in comment.body and comment.id not in comments_replied_to and comment.author or "/products/creative-bottle-openers-tool-flying-cap-launcher" in comment.body and comment.id not in comments_replied_to and comment.author or "ref=cm_sw_r_cp_apa_i_7dIfCb0CW169G" in comment.body and comment.id not in comments_replied_to and comment.author or "/u/BotDetective test" in comment.body and comment.id not in comments_replied_to and comment.author or "etrendan.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "geekydeal.store/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "pearlgadget.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "stiflingdeals.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "prenkart.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "kickize.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author or "hashtagssale.com/products/" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
+			part1()
+	print("Search Completed.")
+	time.sleep(5)
 
 	def part2():
 		print(("String with blacklisted link found in comment " + comment.id + " by " + comment.author.name))
@@ -60,13 +54,15 @@ def run_part2():
 			part2()
 	print("Search Completed.")
 	print(comments_replied_to)
-	run_part3()
+	time.sleep(5)
 	
-def run_part3():
-
-	def part3():
-		print(("String with possibly shortened link found in comment " + comment.id + " by " + comment.author.name))
-		starturl = comment.body
+	print("Searching last 4,000 comments")
+	
+	def extractlink():
+		with open('extractlink.txt', 'r') as g:
+			contents = g.read()	
+			
+		starturl = print(contents)
 		req = urllib.request.Request(starturl)
 		res = urllib.request.urlopen(req)
 		finalurl = res.geturl()
@@ -76,29 +72,39 @@ def run_part3():
 			comment.reply("**WARNING:** This is likely a fake account setup to promote the product shown in this post, please don't encourage this by either visiting the website or any other links provided.\n\n**^If ^the ^user ^is ^indeed ^a ^bot, ^please ^report ^the ^message ^to ^the ^moderators, ^If ^you ^believe ^this ^was ^a ^mistake, ^have ^any ^other ^links ^you ^would ^like ^to ^report, ^or ^would ^like ^to ^add ^your ^subreddit, [^send ^me ^a ^message!](https://www.reddit.com/message/compose/?to=-WarHounds-&subject=BotDetective)**")
 			print(("Replied to comment " + comment.id))
 			with open ("comments_replied_to.txt", "a") as f:
-				f.write(comment.id + "\n")	
+				f.write(comment.id + "\n")
+		else:
+			print("False-positive")
 	
-	print("Searching last 4,000 comments")
+	def getlink():
+		with open('findlink.txt') as infile, open('extractlink.txt', 'w') as outfile:
+			copy = False
+			for line in infile:
+				if line.strip() == "](":
+					copy = True
+				elif line.strip() == ")":
+					copy = False
+				elif copy:
+					outfile.write(line)
+					print("extractlink written.")	
+					infile.close()
+					outfile.close()
+					extractlink()
+			
+	def part3():
+		with open ('findlink.txt', 'w') as infile:
+			infile.write(comment.body)
+			infile.close() 
+			print("infile written and closed.")
+			getlink()
 
 	for comment in urlshorteners:
 		if ".gl" in comment.body and comment.id not in comments_replied_to and comment.author or "bit.ly" in comment.body and comment.id not in comments_replied_to and comment.author or "sungearstore.com" in comment.body and comment.id not in comments_replied_to and comment.author or "baamboom.club" in comment.body and comment.id not in comments_replied_to and comment.author or "qualifiedfashion.com" in comment.body and comment.id not in comments_replied_to and comment.author or "usagearshop.com" in comment.body and comment.id not in comments_replied_to and comment.author or "newtshirtshop.com" in comment.body and comment.id not in comments_replied_to and comment.author or ".website" in comment.body and comment.id not in comments_replied_to and comment.author or ".icu" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
-			with open ("findlink.txt", "w") as infile, open('extractlink', 'w') as outfile:
-				infile.write(comment.body)
-				
-				copy = False
-				for line in infile:
-					if line.strip() == "](":
-						outfile.write(line) # add this
-						copy = True
-					elif line.strip() == ")":
-						outfile.write(line) # add this
-						copy = False
-					elif copy:
-						outfile.write(line)
+			print("Search Completed.")
+			print(("String with possibly shortened link found in comment " + comment.id + " by " + comment.author.name))
 			part3()
-	print("Search Completed.")
-	print(comments_replied_to)
-	run_part1()
+
+	time.sleep(5)
 
 def gethistory():
 	with open ("check_if_op_is_bot.txt", "r+") as b:
@@ -124,7 +130,7 @@ comments_replied_to = get_saved_comments()
 print(comments_replied_to)
 subredditstosearch = r.subreddit('thriftstorehauls+crappyoffbrands+popular+mechanical_gifs+Damnthatsinteresting+DesignPorn+DidntKnowIWantedThat+Eyebleach+Perfectfit+Unexpected+aww+blackmagicfuckery+funny+geek+gifsthatkeepongiving+holdmybeer+interestingasfuck+oddlysatisfying+pics+videos+woahdude+combinedgifs+beamazed+nextfuckinglevel+wholesomegifs+noisygifs+ofcoursethatsathing+productporn+holdmycatnip+bettereveryloop+gifsthatendtoosoon+holdmycosmo+geek+yesyesyesno+yesyesyesyesno').comments(limit=4000)
 subredditsthatdontallowcomments = r.subreddit('gifs+test').comments(limit=1000)
-urlshorteners = r.subreddit('crappyoffbrands+didntknowiwantedthat+designporn+ComedyCemetery+nhl+donaldglover+rickandmorty+thriftstorehauls+Undertale+PandR+Dundermifflin+beatles+Boruto+DanLeBatardShow+thesimpsons+justneckbeardthings+the_donald+DavidBowie+gameofthrones+ddlc+xxxtentacion+therewasanattempt+woahdude+pics+batman+funny+breakingbad+supremeclothing+memes+thriftstorehauls+crappyoffbrands+popular+mechanical_gifs+Damnthatsinteresting+DesignPorn+DidntKnowIWantedThat+Eyebleach+funny+geek+interestingasfuck+oddlysatisfying+pics+videos+woahdude+combinedgifs+beamazed+nextfuckinglevel+wholesomegifs+noisygifs+ofcoursethatsathing+productporn').comments(limit=4000)
+urlshorteners = r.subreddit('finalfantasy+crappyoffbrands+didntknowiwantedthat+designporn+ComedyCemetery+nhl+donaldglover+rickandmorty+thriftstorehauls+Undertale+PandR+Dundermifflin+beatles+Boruto+DanLeBatardShow+thesimpsons+justneckbeardthings+the_donald+DavidBowie+gameofthrones+ddlc+xxxtentacion+therewasanattempt+woahdude+pics+batman+funny+breakingbad+supremeclothing+memes+thriftstorehauls+crappyoffbrands+popular+mechanical_gifs+Damnthatsinteresting+DesignPorn+DidntKnowIWantedThat+Eyebleach+funny+geek+interestingasfuck+oddlysatisfying+pics+videos+woahdude+combinedgifs+beamazed+nextfuckinglevel+wholesomegifs+noisygifs+ofcoursethatsathing+productporn').comments(limit=4000)
 
 while True:
 	run_bot(r, comments_replied_to)
