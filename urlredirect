@@ -1,0 +1,35 @@
+import config
+import time
+import requests
+
+def extractlink():
+    with open('extractlink.txt', 'r') as g:
+        print("opened extractlink.txt for reading")
+        contents = g.read()
+        headers = {'userAgent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'}
+        session = requests.Session()
+        r = session.get(contents, headers=headers)
+        print(r.history)
+        print(r.status_code)
+        print(("Links to " + r.url))
+        time.sleep (2)
+
+def getlink():
+    with open('findlink.txt') as infile, open('extractlink.txt', 'w') as outfile:
+        for line in infile:
+            outfile.write(line[line.find("](")+2: line.find(")")])
+            print("extractlink written.")
+        infile.close()
+        outfile.close()
+        extractlink()
+
+
+def part3():
+    with open ('findlink.txt', 'w') as findlink:
+        findlink.write("[something](http://butterup.teechip.icu)")
+        print("findlink written and closed.")
+        findlink.close()
+        getlink()
+
+while True:
+    part3()
